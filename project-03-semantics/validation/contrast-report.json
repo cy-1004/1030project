@@ -1,0 +1,71 @@
+{
+  "report": [
+    {
+      "page": "editor",
+      "checked": 57,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "analysis and evidence",
+      "checked": 129,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "entities",
+      "checked": 120,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "rules",
+      "checked": 114,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "term library",
+      "checked": 81,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "term dialog",
+      "checked": 90,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "rule library",
+      "checked": 54,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "rule dialog",
+      "checked": 66,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "history",
+      "checked": 54,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "history mobile",
+      "checked": 46,
+      "minimumRatio": 4.68,
+      "failures": []
+    },
+    {
+      "page": "analysis mobile",
+      "checked": 119,
+      "minimumRatio": 4.68,
+      "failures": []
+    }
+  ],
+  "failures": []
+}

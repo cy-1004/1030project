@@ -114,5 +114,16 @@ class SemanticsAPITest(unittest.TestCase):
         semantics_service.init_db(self.connect)
         self.assertFalse(any(t['id']==item['id'] for t in self.call('/terms')))
 
+    def test_summary_uses_source_details_and_organization_offsets(self):
+        samples=self.call('/catalog')['samples']
+        for sample in samples:
+            run=self.call('/analyze','POST',{'scene':sample['scene'],'text':sample['text']})
+            self.assertEqual(run['summarySource'],'本地摘录')
+            self.assertTrue(all(part in sample['text'] for part in run['summary'].split('；')))
+            for entity in run['entities']:
+                self.assertEqual(sample['text'][entity['start']:entity['end']],entity['text'])
+            self.assertTrue(any(e['type']=='组织' and e['text']=='星河文化有限公司' for e in run['entities']))
+        self.assertIn('120,000元',self.call('/analyze','POST',{'scene':'contract','text':samples[0]['text']})['summary'])
+
 
 if __name__=='__main__': unittest.main()

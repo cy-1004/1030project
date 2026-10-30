@@ -1,0 +1,13 @@
+export type Face={shape:number;eyes:number;nose:number;smile:number}
+export type Config={presetId:string;skinId:string;hairId:string;hairColor:string;outfitId:string;outfitColor:string;size:string;shoesId:string;shoesColor:string;sceneId:string;face:Face}
+export type Work={id:string;name:string;config:Config;createdAt:string;updatedAt:string}
+export type Item={id:string;name:string;tag?:string;subtitle?:string}
+export type Catalog={presets:Item[];skins:Item[];hairs:Item[];outfits:Item[];shoes:Item[];scenes:Item[]}
+export const fallback:Catalog={presets:[{id:'mira',name:'都市漫游者',subtitle:'优雅 / 松弛'},{id:'noa',name:'艺廊策展人',subtitle:'极简 / 先锋'},{id:'sol',name:'日落旅人',subtitle:'自由 / 自然'}],skins:[{id:'light',name:'瓷白'},{id:'warm',name:'暖沙'},{id:'deep',name:'琥珀'}],hairs:[{id:'bob',name:'法式短发',tag:'随性'},{id:'sleek',name:'利落马尾',tag:'干练'},{id:'waves',name:'自然长发',tag:'柔和'},{id:'pixie',name:'精灵短发',tag:'先锋'},{id:'bun',name:'编发造型',tag:'精致'},{id:'long',name:'柔顺短发',tag:'经典'}],outfits:[{id:'trench',name:'廓形风衣',tag:'当季精选'},{id:'blazer',name:'多袋外套',tag:'都会'},{id:'knit',name:'连帽上衣',tag:'松弛'},{id:'dress',name:'简约连衣裙',tag:'晚宴'},{id:'jacket',name:'短款夹克',tag:'街头'},{id:'shirt',name:'衬衫套裙',tag:'日常'}],shoes:[{id:'boots',name:'中筒靴',tag:'利落'},{id:'heels',name:'尖头高跟',tag:'优雅'},{id:'sneakers',name:'休闲鞋',tag:'舒适'},{id:'loafers',name:'方头乐福',tag:'通勤'},{id:'ankle',name:'短靴',tag:'经典'},{id:'sandals',name:'细带凉鞋',tag:'轻盈'}],scenes:[{id:'gallery',name:'光之艺廊'},{id:'dusk',name:'暮色之城'},{id:'studio',name:'象牙摄影棚'}]}
+export const base:Config={presetId:'mira',skinId:'warm',hairId:'bob',hairColor:'espresso',outfitId:'dress',outfitColor:'sand',size:'M',shoesId:'boots',shoesColor:'ink',sceneId:'gallery',face:{shape:2,eyes:2,nose:2,smile:2}}
+export function preset(id:string):Config {if(id==='noa')return {...base,presetId:id,skinId:'light',hairId:'sleek',outfitId:'blazer',outfitColor:'ink',shoesId:'heels',sceneId:'dusk',face:{...base.face}};if(id==='sol')return {...base,presetId:id,skinId:'deep',hairId:'waves',hairColor:'chestnut',outfitId:'dress',outfitColor:'ivory',shoesId:'sandals',shoesColor:'sand',sceneId:'studio',face:{...base.face}};return {...base,face:{...base.face}}}
+export const skinColors:Record<string,string>={light:'#e7bfaa',warm:'#cb967c',deep:'#966550'}
+export const hairColors:Record<string,string>={espresso:'#302523',chestnut:'#694636',honey:'#b5865c'}
+export const outfitColors:Record<string,string>={sand:'#aa9278',ink:'#303a39',ivory:'#ded8ca',rose:'#a6726c'}
+export const shoeColors:Record<string,string>={ink:'#292a28',sand:'#a18b74',ivory:'#e0d8ca'}
+export const nameOf=(items:Item[],id:string)=>items.find(x=>x.id===id)?.name||id

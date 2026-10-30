@@ -1,0 +1,11 @@
+import {useState} from 'react'
+import {ArrowUpRight,Clock3,FileText,History,RotateCcw,Search,Trash2} from 'lucide-react'
+import {Run,sceneLabels} from './types'
+export default function RunHistory({runs,busy,open,replay,remove}:{runs:Run[];busy:string;open:(id:string)=>void;replay:(id:string)=>void;remove:(id:string)=>Promise<void>}){
+ const [query,setQuery]=useState(''),[error,setError]=useState(''),[deleting,setDeleting]=useState(false)
+ async function erase(r:Run){if(!confirm('删除“'+r.title+'”及其问答记录？'))return;setDeleting(true);setError('');try{await remove(r.id)}catch(e){setError((e as Error).message)}finally{setDeleting(false)}}
+ const filtered=runs.filter(r=>(r.title+sceneLabels[r.scene]).includes(query))
+ return <section className="panel history-panel"><div className="library-toolbar"><h2><History size={19}/>最近的分析<span className="tag neutral">{runs.length} 条</span></h2><label className="search-box"><Search size={16}/><input aria-label="搜索处理记录" placeholder="搜索材料或场景…" value={query} onChange={e=>setQuery(e.target.value)}/></label></div><div className="history-note"><RotateCcw size={17}/><span>打开记录查看当时快照；重放使用当前词典与规则，生成一条新记录。问答区可重新提问。</span></div>{error&&<div className="alert error" role="alert">{error}</div>}
+  <div className="history-list">{filtered.map(r=><article className="history-row" key={r.id}><span className="history-file"><FileText size={23}/></span><div className="history-title"><h3>{r.title}</h3><span><span className="tag blue-tag">{sceneLabels[r.scene]}</span><Clock3 size={13}/>{new Date(r.created_at).toLocaleString('zh-CN',{hour12:false})}</span><small>{r.id.slice(0,8)}</small></div><div className="history-actions"><button className="secondary" disabled={!!busy||deleting} onClick={()=>open(r.id)}>打开快照<ArrowUpRight size={14}/></button><button className="secondary" disabled={!!busy||deleting} onClick={()=>replay(r.id)}><RotateCcw size={14}/>重放</button><button className="icon-button danger" aria-label={'删除记录'+r.title} disabled={!!busy||deleting} onClick={()=>void erase(r)}><Trash2 size={17}/></button></div></article>)}{!filtered.length&&<div className="history-empty"><History size={35}/><h3>{runs.length?'没有匹配的记录':'这里会保存每一次分析'}</h3><p>完成材料分析后，可在这里打开快照、重放或删除。</p></div>}</div><div className="library-bottom">展示最近 100 条记录 · 记录与配置保存在本地数据库</div>
+ </section>
+}
